@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+/* Layout: one left-aligned reading column (max 44rem) with a wider band for the work list.
+   Bold element: the page-weight meter in the hero. Everything else stays quiet. */
+:root {
+  --paper: #f2f4ef;   /* faintly green paper */
+  --ink: #10291f;     /* deep forest green, used for all text */
+  --muted: #56685e;
+  --line: #cfd8cf;
+  --signal: #f0b400;  /* signal yellow: the meter fill, nothing else */
+  --link: #1d5c43;
+  --proposal-bg: #fff2a8;
+  --proposal-line: #b58a00;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0c1813;
+    --ink: #e4ece6;
+    --muted: #95a99d;
+    --line: #233a30;
+    --signal: #f5c02a;
+    --link: #8fd3b2;
+    --proposal-bg: #4a3d00;
+    --proposal-line: #f5c02a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0c1813;
+  --ink: #e4ece6;
+  --muted: #95a99d;
+  --line: #233a30;
+  --signal: #f5c02a;
+  --link: #8fd3b2;
+  --proposal-bg: #4a3d00;
+  --proposal-line: #f5c02a;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-signal: var(--signal);
+  --color-link: var(--link);
+  --font-display: var(--font-archivo), "Arial Narrow", "Roboto Condensed", sans-serif-condensed, sans-serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+h1, h2, h3 { text-wrap: balance; }
+
+a { color: var(--link); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; border-radius: 2px; }
+
+/* Guesses waiting for confirmation (text written as [[...]] in content.ts) */
+mark.proposal {
+  background: var(--proposal-bg);
+  color: inherit;
+  border-bottom: 2px dashed var(--proposal-line);
+  padding: 0 0.15em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* The one orchestrated moment: the meter fills once on load. */
+@keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.meter-fill { transform-origin: left; animation: fill 900ms cubic-bezier(.2,.7,.2,1) 150ms both; }
+@media (prefers-reduced-motion: reduce) { .meter-fill { animation: none; } }
