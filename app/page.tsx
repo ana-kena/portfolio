@@ -251,6 +251,8 @@ function Shots({ images }: { images: NonNullable<CaseStudy["images"]> }) {
     <img
       key={i.src}
       src={i.src}
+      srcSet={i.srcSet}
+      sizes={i.srcSet ? "(min-width: 1024px) 42rem, calc(100vw - 2rem)" : undefined}
       alt={i.alt}
       width={i.width}
       height={i.height}

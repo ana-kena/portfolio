@@ -5,7 +5,7 @@ import { pageWeight } from "@/content";
  * Pure HTML and CSS: it works before (and without) any JavaScript.
  */
 export function WeightMeter() {
-  const { budgetKB, readableKB, totalKB } = pageWeight;
+  const { budgetKB, readableKB, totalKB, shotsPhoneKB } = pageWeight;
   const pct = (kb: number) => `${Math.min(100, (kb / budgetKB) * 100)}%`;
   const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => Math.round(f * budgetKB));
   // Rough 3G download time: 400 kbit/s effective throughput plus one 300 ms round trip.
@@ -56,7 +56,7 @@ export function WeightMeter() {
       <figcaption id="meter-caption" className="mt-3 max-w-[38rem] text-sm text-muted">
         The black line marks {readableKB} KB: the point where the text is on screen and readable. A typical
         site with a photo slider and tracking scripts can cost ten times this budget on a phone that pays for
-        every megabyte.
+        every megabyte. Project screenshots load only when you scroll to them: about {shotsPhoneKB} KB more on most phones.
       </figcaption>
     </figure>
   );

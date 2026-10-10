@@ -28,7 +28,8 @@ export const hero = {
 export const pageWeight = {
   budgetKB: 200,
   readableKB: 24, // HTML + CSS + font: what the phone needs before it can show the page
-  totalKB: 175, // everything, including JavaScript, compressed as it travels
+  totalKB: 125, // everything the page needs, including JavaScript, compressed as it travels
+  shotsPhoneKB: 96, // project screenshots a phone downloads, only once scrolled to
 };
 
 export type CaseStudy = {
@@ -44,7 +45,15 @@ export type CaseStudy = {
   results?: string[];
   links: { label: string; href: string }[];
   /** Screenshots in /public/work. `phone` shots sit side by side; `desktop` shots take the full width. */
-  images?: { src: string; alt: string; width: number; height: number; kind: "phone" | "desktop" }[];
+  images?: {
+    src: string;
+    /** Optional smaller copies, so phones download a lighter file: "/work/x-960.webp 960w, /work/x.webp 1905w" */
+    srcSet?: string;
+    alt: string;
+    width: number;
+    height: number;
+    kind: "phone" | "desktop";
+  }[];
 };
 
 export const work: CaseStudy[] = [
@@ -96,10 +105,11 @@ export const work: CaseStudy[] = [
     links: [{ label: "Visit jangirde.com", href: "https://jangirde.com" }],
     images: [
       {
-        src: "/work/jangirde.webp",
+        src: "/work/jangirde-1905.webp",
+        srcSet: "/work/jangirde-960.webp 960w, /work/jangirde-1905.webp 1905w",
         alt: "Jangirde home page: 'Apprenez le Fulfulde avec facilité', with buttons to start for free or sign in",
-        width: 1200,
-        height: 511,
+        width: 1905,
+        height: 812,
         kind: "desktop",
       },
     ],
