@@ -147,7 +147,9 @@ export default function Home() {
 }
 
 function Case({ c }: { c: CaseStudy }) {
-  const hasDetail = Boolean(c.problem || c.built || c.forSlowNetworks?.length || c.results?.length);
+  const hasDetail = Boolean(
+    c.problem || c.built || c.forSlowNetworks?.length || c.results?.length || c.images?.length,
+  );
   return (
     <article id={c.id} className="grid gap-6 py-10 lg:grid-cols-[17rem_1fr] lg:gap-12">
       <div className={hasDetail ? "min-w-0" : "min-w-0 lg:col-span-2 lg:max-w-[42rem]"}>
@@ -191,6 +193,7 @@ function Case({ c }: { c: CaseStudy }) {
 
       {hasDetail && (
         <div className="grid min-w-0 max-w-[42rem] content-start gap-5">
+          {c.images && c.images.length > 0 && <Shots images={c.images} />}
           {c.problem && (
             <Block label="The problem">
               <T>{c.problem}</T>
@@ -236,6 +239,36 @@ function Block({ label, children }: { label: string; children: React.ReactNode }
     <div>
       <h4 className="text-sm font-semibold text-muted">{label}</h4>
       <p className="mt-1">{children}</p>
+    </div>
+  );
+}
+
+function Shots({ images }: { images: NonNullable<CaseStudy["images"]> }) {
+  const phones = images.filter((i) => i.kind === "phone");
+  const desktops = images.filter((i) => i.kind === "desktop");
+  // Lazy and async: screenshots download only when scrolled near, and never hold up the text.
+  const img = (i: (typeof images)[number], className: string) => (
+    <img
+      key={i.src}
+      src={i.src}
+      alt={i.alt}
+      width={i.width}
+      height={i.height}
+      loading="lazy"
+      decoding="async"
+      className={className}
+    />
+  );
+  return (
+    <div className="grid gap-4">
+      {desktops.map((i) => img(i, "h-auto w-full border border-line"))}
+      {phones.length > 0 && (
+        <div className="flex flex-wrap gap-4">
+          {phones.map((i) =>
+            img(i, "h-auto w-[calc(50%-0.5rem)] max-w-[17rem] rounded-[1.1rem] border border-line"),
+          )}
+        </div>
+      )}
     </div>
   );
 }

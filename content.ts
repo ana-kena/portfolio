@@ -27,8 +27,8 @@ export const hero = {
  */
 export const pageWeight = {
   budgetKB: 200,
-  readableKB: 23, // HTML + CSS + font: what the phone needs before it can show the page
-  totalKB: 123, // everything, including JavaScript, compressed as it travels
+  readableKB: 24, // HTML + CSS + font: what the phone needs before it can show the page
+  totalKB: 175, // everything, including JavaScript, compressed as it travels
 };
 
 export type CaseStudy = {
@@ -43,6 +43,8 @@ export type CaseStudy = {
   forSlowNetworks?: string[];
   results?: string[];
   links: { label: string; href: string }[];
+  /** Screenshots in /public/work. `phone` shots sit side by side; `desktop` shots take the full width. */
+  images?: { src: string; alt: string; width: number; height: number; kind: "phone" | "desktop" }[];
 };
 
 export const work: CaseStudy[] = [
@@ -92,6 +94,15 @@ export const work: CaseStudy[] = [
     ],
     results: ["500+ active learners", "5 payment methods in one checkout"],
     links: [{ label: "Visit jangirde.com", href: "https://jangirde.com" }],
+    images: [
+      {
+        src: "/work/jangirde.webp",
+        alt: "Jangirde home page: 'Apprenez le Fulfulde avec facilité', with buttons to start for free or sign in",
+        width: 1200,
+        height: 511,
+        kind: "desktop",
+      },
+    ],
   },
   {
     id: "dancymeals",
@@ -106,10 +117,27 @@ export const work: CaseStudy[] = [
   {
     id: "in-mboa",
     title: "IN-MBOA",
-    summary: "A live web platform, installable to the phone's home screen.",
+    summary:
+      "A local marketplace for Cameroon: people post needs and offers, find businesses and people nearby, and chat or call them in the app. Posts are translated automatically from French.",
     role: "Full stack",
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     links: [{ label: "Visit in-mboa.com", href: "https://in-mboa.com" }],
+    images: [
+      {
+        src: "/work/in-mboa-explore.webp",
+        alt: "IN-MBOA Explore screen on a phone: a feed of needs and offers in Yaoundé with prices in FCFA and a Chat button on each post",
+        width: 271,
+        height: 600,
+        kind: "phone",
+      },
+      {
+        src: "/work/in-mboa-profile.webp",
+        alt: "IN-MBOA Profile screen on a phone: connections, businesses, needs, clients and saved replies",
+        width: 274,
+        height: 597,
+        kind: "phone",
+      },
+    ],
   },
 ];
 
@@ -118,7 +146,7 @@ export const approach = {
   items: [
     {
       title: "Keep pages light",
-      text: "This page is readable after 23 KB. Every kilobyte costs a user on mobile data time and money.",
+      text: "This page is readable after 24 KB. Every kilobyte costs a user on mobile data time and money.",
     },
     {
       title: "Let the server do the work",
